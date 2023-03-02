@@ -5,7 +5,7 @@ import './App.scss'
 export const App = defineComponent({
     setup() {
 const count = ref(3)
-return () => (<div>
+return () => (<div class="page">
     <RouterView />
 </div>)
     }
