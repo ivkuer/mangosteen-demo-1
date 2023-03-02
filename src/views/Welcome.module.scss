@@ -1,21 +1,30 @@
 .wrapper {
-    height: calc(100vh - var(--welcome-nav-height)) ;
+    height: calc(100vh - var(--welcome-nav-height));
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, var(--welcome-bg-start), var(--welcome-bg-end));
+    background-image: linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%);
     margin-bottom: var(--welcome-nav-height);
     > header {
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-top: 66px;
-        color: #d4d4ee;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 66px;
+      color: #D4D4EE;
+      > svg {
+        width: 64px;
+        height: 69px;
+      }
     }
     > main {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin: 16px 16px var(--welcome-nav-gap);
     }
-}
+    > footer {
+      flex-shrink: 0;
+    }
+  }
