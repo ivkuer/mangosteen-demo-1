@@ -10,7 +10,9 @@
   "dependencies": {
     "sass": "^1.58.3",
     "vue": "3.2.31",
-    "vue-router": "4"
+    "vue-router": "4",
+    "svgo": "2.8.0",
+    "svgstore": "3.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "2.3.1",
