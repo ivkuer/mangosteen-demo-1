@@ -4,17 +4,7 @@ import s from './welcome.module.scss';
 import {  defineComponent, ref, watchEffect } from 'vue';
 export const First = defineComponent({
     setup() {
-        const router = useRouter()
-        const div = ref<HTMLDivElement>()
-        const { swiping, direction } = useSwipe(div,{
-            beforeStart: e => e.preventDefault()
-        })
-        watchEffect(() => {
-            if (swiping.value && direction.value === 'left') {
-                router.push('/welcome/2')
-            }
-        })
-        return () => (<div class={s.card} ref={div}>
+        return () => (<div class={s.card}>
             <svg>
                 <use xlinkHref='#pig'></use>
             </svg>
