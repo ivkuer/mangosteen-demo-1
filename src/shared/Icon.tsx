@@ -5,15 +5,15 @@ export type IconName  = 'add' | 'chart' | 'clock' | 'cloud' | 'mangosteen' | 'pi
 
 export const Icon = defineComponent({
     props: {
-        iconName: {
+        name: {
             type: String as PropType<IconName>,
             required: true
         }
     },
     setup: (props, context) => {
         return () => (
-            <svg class={s.icon}>
-                <use xlinkHref={'#' + props.iconName}></use>
+            <svg>
+                <use xlinkHref={'#' + props.name}></use>
             </svg>
         )
     }
