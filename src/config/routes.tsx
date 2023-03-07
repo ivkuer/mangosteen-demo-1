@@ -23,5 +23,6 @@ export const routes: RouteRecordRaw[] = [
       { path: '4',name: 'welcome4', components: { main: Forth, footer: ForthActions }, },
     ]
   },
-  {path: '/start', component: StartPage}
+  {path: '/start', component: StartPage},
+  
 ]
