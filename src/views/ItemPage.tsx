@@ -9,8 +9,7 @@ export const ItemPage = defineComponent({
     },
     setup: (props, context) => {
         return () => (
-            <div class={s.wrapper}>ho
-            
+            <div class={s.wrapper}>
             <RouterView></RouterView>
             </div>
         )
