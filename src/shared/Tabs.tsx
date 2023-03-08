@@ -9,23 +9,26 @@ export const Tabs = defineComponent({
     setup: (props, context) => {
 
         return () => {
-            const arr = context.slots.default?.()
-            if (!arr) return () => null
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].type !== Tab) {
+            const tabs = context.slots.default?.()
+            if (!tabs) return () => null
+            for (let i = 0; i < tabs.length; i++) {
+                if (tabs[i].type !== Tab) {
                     throw new Error('tabs only tab')
                 }
             }
             return <div class={s.tabs}>
-                <ol class={s.tab_nav}>
-                    {arr.map(item =>
+                <ol class={s.tabs_nav}>
+                    {tabs.map(item =>
                         <li class={item.props?.name === props.selected ? s.selected : ''}
-                        onClick={() => context.emit('update:selected', item.props?.name)}
+                            onClick={() => context.emit('update:selected', item.props?.name)}
                         >
                             {item.props?.name}
                         </li>
                     )}
                 </ol>
+                <div>
+                    {tabs.find(item => item.props?.name === props.selected)}
+                </div>
             </div>
         }
     }
@@ -39,7 +42,9 @@ export const Tab = defineComponent({
     },
     setup: (props, context) => {
         return () => (
-            <div></div>
+            <div>{
+                context.slots.default?.()
+            }</div>
         )
     }
 })

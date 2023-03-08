@@ -18,8 +18,8 @@ export const ItemCreate = defineComponent({
                     icon: () => <Icon name="pig" />,
                     default: () => <>
                             <Tabs v-model:selected={refKind.value}>
-                                <Tab name="支出">icon列表</Tab>
-                                <Tab name="收入">icon列表</Tab>
+                                <Tab name="支出">icon列表1</Tab>
+                                <Tab name="收入">icon列表2</Tab>
                             </Tabs>
                         </>
                 }
