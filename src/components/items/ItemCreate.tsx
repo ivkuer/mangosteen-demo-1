@@ -3,6 +3,7 @@ import s from './ItemCreate.module.scss';
 import { MainLayout } from '../../layouts/MainLayout';
 import { Icon } from '../../shared/Icon';
 import { Tabs, Tab } from '../../shared/Tabs';
+import { InputPad } from './InputPad';
 export const ItemCreate = defineComponent({
     props: {
         name: {
@@ -15,12 +16,15 @@ export const ItemCreate = defineComponent({
             <MainLayout>{
                 {
                     title: () => '记一笔',
-                    icon: () => <Icon name="pig" />,
+                    icon: () => <Icon name="left" />,
                     default: () => <>
                             <Tabs v-model:selected={refKind.value}>
                                 <Tab name="支出">icon列表1</Tab>
                                 <Tab name="收入">icon列表2</Tab>
                             </Tabs>
+                            <div class={s.inputPad_wrapper}>
+                            <InputPad />
+                            </div>
                         </>
                 }
             }</MainLayout>
