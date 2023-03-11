@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue';
-import { Button } from '../shared/button';
+import { Button } from '../shared/Button';
 import s from './StartPage.module.scss'
 import { Icon } from '../shared/Icon';
 import { FloatButton } from '../shared/FloatButton';
