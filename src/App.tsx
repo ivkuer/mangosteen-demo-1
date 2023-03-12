@@ -5,9 +5,9 @@ import './App.scss'
 
 export const App = defineComponent({
     setup() {
-        return () => (<div class="page">
+        return () => (
             <RouterView />
-        </div>)
+)
     }
 })
 

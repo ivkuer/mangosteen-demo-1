@@ -1,12 +1,21 @@
-@import './assets/stylesheet/reset.scss';
-@import './assets//stylesheet/helper.scss';
-@import './assets/stylesheet/vars.scss';
+@import "./assets/stylesheet/reset.scss";
+@import "./assets//stylesheet/helper.scss";
+@import "./assets/stylesheet/vars.scss";
 
 body {
-    font-family: $font-hei;
-    font-size: 16px;
-    color: #4a4a4a;
+  font-family: $font-hei;
+  font-size: 16px;
+  color: #4a4a4a;
 }
 ::webkit-scrollbar {
-    visibility: hidden;
+  visibility: hidden;
+}
+
+.customTabs_tabs_nav {
+  justify-content: flex-start !important;
+  & > &_item {
+    flex-grow: 0;
+    padding-left: 16px;
+    padding-right: 16px;
   }
+}

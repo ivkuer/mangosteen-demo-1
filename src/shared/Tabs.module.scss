@@ -5,12 +5,12 @@
       align-items: center;
       text-align: center;
       color: var(--navbar-text);
+      background: var(--navbar-bg-end);
   
       > li {
         flex-grow: 1;
         flex-shrink: 0;
         padding: 12px 0;
-        background: var(--navbar-bg-end);
         &.selected {
           position: relative;
           &::after {

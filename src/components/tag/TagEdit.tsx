@@ -16,7 +16,7 @@ export const TagEdit = defineComponent({
           <TagForm />
           <div class={s.actions}>
             <Button level='danger' class={s.removeTags}>删除标签</Button>
-            <Button class={s.removeTagsAndItems}>删除标签和记账</Button>
+            <Button level='danger' class={s.removeTagsAndItems}>删除标签和记账</Button>
           </div>
           </>
         )

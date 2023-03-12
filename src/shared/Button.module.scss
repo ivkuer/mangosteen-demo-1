@@ -1,17 +1,17 @@
 .button {
-    padding: 8px 16px;
-    color: var(--button-text);
-    background-color: var(--button-bg);
     border: 1px solid var(--button-bg);
+    padding: 8px 16px;
+    background: var(--button-bg);
+    color: var(--button-text);
     font-size: var(--button-font-size);
     border-radius: var(--button-radius);
-    height: 48px;
-
-    &.normal {}
-    &.important {}
-    &.danger {
-        background-color: #DF2E38;
-        border: 1px solid #DF2E38;
+    height: var(--button-height);
+    &.normal {
     }
-}
-
+    &.important {
+    }
+    &.danger {
+      background: var(--button-bg-danger);
+      border-color: var(--button-bg-danger);
+    }
+  }
