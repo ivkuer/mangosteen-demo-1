@@ -1,27 +1,27 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from './Icon';
 import s from './Overlay.module.scss'
 import { RouterLink } from 'vue-router';
 export const Overlay = defineComponent({
-    props: {
-        onClose: {
-            type: Function as PropType<() => void>
-        }
-    },
-    setup: (props, context) => {
-        const close = () => {
-            props.onClose?.()
-        }
-        return () => (<>
-        <div class={s.mask} onClick={close}></div>
-            <div class={s.overlay}>
-                <section>
-                    <h2>未登录用户</h2>
-                    <p>点击这里登录</p>
-                </section>
-                <nav>
-                    <ul>
-                    <li>
+  props: {
+    onClose: {
+      type: Function as PropType<() => void>
+    }
+  },
+  setup: (props, context) => {
+    const close = () => {
+      props.onClose?.()
+    }
+    return () => (<>
+      <div class={s.mask} onClick={close}></div>
+      <div class={s.overlay}>
+        <section>
+          <h2>未登录用户</h2>
+          <p>点击这里登录</p>
+        </section>
+        <nav>
+          <ul>
+            <li>
               <RouterLink to="/statistics" class={s.action}>
                 <Icon name="charts" class={s.icon} />
                 <span>统计图表</span>
@@ -29,20 +29,37 @@ export const Overlay = defineComponent({
             </li>
             <li>
               <RouterLink to="/export" class={s.action}>
-                <Icon name="export" class={s.icon}/>
+                <Icon name="export" class={s.icon} />
                 <span>导出数据</span>
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/notify" class={s.action}>
-                <Icon name="notify" class={s.icon}/>
+                <Icon name="notify" class={s.icon} />
                 <span>记账提醒</span>
               </RouterLink>
             </li>
-                    </ul>
-                </nav>
-            </div>
-            </>
-        )
+          </ul>
+        </nav>
+      </div>
+    </>
+    )
+  }
+})
+
+export const OverlayIcon = defineComponent({
+
+  setup: (props, context) => {
+    const overlayVisile = ref(false)
+    const onClickMenu = () => {
+      overlayVisile.value = !overlayVisile.value
     }
+    return () => (
+      <>
+        <Icon name="menu" class={s.icon} onClick={onClickMenu} />
+        {overlayVisile.value &&
+          <Overlay onClose={() => overlayVisile.value = false} />
+        }</>
+    )
+  }
 })
