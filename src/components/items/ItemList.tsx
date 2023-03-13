@@ -38,6 +38,12 @@ export const ItemList = defineComponent({
       refOverlayVisible.value = false
     }
 
+    const onSelect = (value: string) => {
+      if (value === '自定义时间') {
+        refOverlayVisible.value = true
+      }
+    }
+
     return () => (
       <MainLayout>
         {{
@@ -48,6 +54,7 @@ export const ItemList = defineComponent({
               <Tabs
                 classPrefix={"customTabs"}
                 v-model:selected={refSelected.value}
+                onUpdate:selected={onSelect}
               >
                 <Tab name="本月">
                   <ItemSummary
@@ -63,8 +70,8 @@ export const ItemList = defineComponent({
                 </Tab>
                 <Tab name="今年">
                   <ItemSummary
-                    startDate={timeList[3].start.format()}
-                    endDate={timeList[3].end.format()}
+                    startDate={timeList[2].start.format()}
+                    endDate={timeList[2].end.format()}
                   />
                 </Tab>
                 <Tab name="自定义时间">
@@ -77,7 +84,7 @@ export const ItemList = defineComponent({
               <Overlay show={refOverlayVisible.value} class={s.overlay}>
                 <div class={s.overlay_inner}>
                   <header>请选择时间</header>
-                  <Form>
+                  <Form onSubmit={onSubmitCustomTime}>
                     <FormItem
                       label="开始时间"
                       type="date"
@@ -88,9 +95,9 @@ export const ItemList = defineComponent({
                       type="date"
                       v-model={customTime.end}
                     ></FormItem>
-                    <FormItem>
+                    <FormItem >
                       <div class={s.actions}>
-                        <button type="button">取消</button>
+                        <button type="button" onClick={() => refOverlayVisible.value = false}>取消</button>
                         <button type="submit">确认</button>
                       </div>
                     </FormItem>

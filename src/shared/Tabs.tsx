@@ -8,12 +8,9 @@ export const Tabs = defineComponent({
     selected: {
       type: String as PropType<string>,
       required: false,
-    },
-    onUpdateSelected: {
-      type: Function as PropType<(name: string) => void>,
-      required: false,
     }
   },
+  emits: ['update:selected'],
   setup: (props, context) => {
     return () => {
       const tabs = context.slots.default?.()
@@ -25,7 +22,7 @@ export const Tabs = defineComponent({
       }
       const cp = props.classPrefix
       return <div class={[s.tabs, cp + '_tabs']}>
-        <ol class={[cp + '_tabs_nav',s.tabs_nav, 'impo' ]}>
+        <ol class={[cp + '_tabs_nav',s.tabs_nav]}>
           {tabs.map(item =>
             <li class={[
               item.props?.name === props.selected ? [s.selected, cp + '_selected'] : '',
