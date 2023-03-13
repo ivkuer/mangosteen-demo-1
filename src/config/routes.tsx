@@ -15,7 +15,7 @@ import { ItemCreate } from "../components/items/ItemCreate";
 import { TagPage } from "../views/TagPage";
 import { TagCreate } from "../components/tag/TagCreate";
 import { TagEdit } from "../components/tag/TagEdit";
-
+import {SignInPage} from "../views/SignInPage"
 import { StatisticsPage } from "../views/StatisticsPage";
 
 export const routes: RouteRecordRaw[] = [
