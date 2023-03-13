@@ -1,0 +1,18 @@
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 0 0;
+  .icon {
+    width: 64px;
+    height: 68px;
+  }
+  .appName {
+    font-size: 32px;
+    font-weight: bold;
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+    -webkit-text-fill-color: transparent ;
+    -webkit-background-clip: text;
+  }
+}

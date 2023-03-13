@@ -26,6 +26,11 @@
       border-color: var(--error-color);
     }
   }
+
+  &.validationCodeInput {
+    width: 5.5em;
+    margin-right: 12px;
+  }
   
   &_value {
     display: flex;

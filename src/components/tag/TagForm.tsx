@@ -35,18 +35,18 @@ export const TagForm = defineComponent({
           label="标签名"
           v-model={formData.name}
           type="text"
-          error={errors["name"] ? errors["name"][0] : "　"}
+          error={errors["name"]?.[0]}
         ></FormItem>
         <FormItem
           label={"符号" + formData.sign}
           v-model={formData.sign}
           type="emojiSelect"
-          error={errors["sign"] ? errors["sign"][0] : "　"}
+          error={errors["sign"]?.[0]}
         ></FormItem>
         <FormItem>
           <p class={s.tips}>记账时长按标签即可进行编辑</p>
         </FormItem>
-        <FormItem>
+        <FormItem >
           <Button class={ s.button}>确定</Button>
         </FormItem>
       </Form>
