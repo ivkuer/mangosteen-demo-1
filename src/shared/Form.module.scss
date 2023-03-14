@@ -27,6 +27,13 @@
     }
   }
 
+  &.select{
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--input-radius);
+    padding: 0 8px;
+    width: 100%;
+  }
+
   &.validationCodeInput {
     width: 5.5em;
     margin-right: 12px;
