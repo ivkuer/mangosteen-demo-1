@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import s from "./SignInPage.module.scss";
 import { MainLayout } from "../layouts/MainLayout";
 import { Icon } from "../shared/Icon";
@@ -45,12 +45,14 @@ export const SignInPage = defineComponent({
         ])
       );
     };
-
+    const onValidationCode = ref<any>()
     const onClickSendValidationCode = async () => {
      const response = await axios.post('/api/v1/validation_codes', { email: formDate.email })
-      console.log(response);
+     .catch(() => {})
+      onValidationCode.value.startCount()
       
     }
+   
     return () => (
       <MainLayout>
         {{
@@ -77,6 +79,8 @@ export const SignInPage = defineComponent({
                   v-model={formDate.code}
                   placeholder="六位数"
                   onClick={onClickSendValidationCode}
+                  countFrom={3}
+                  ref={onValidationCode}
                   error={errors.code?.[0]}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
