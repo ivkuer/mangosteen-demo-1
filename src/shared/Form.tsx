@@ -93,7 +93,7 @@ export const FormItem = defineComponent({
             <input  class={[s.formItem, s.input, s.validationCodeInput]} 
             placeholder={props.placeholder}
             />
-            <Button onClick={props.onClick}>发送验证码</Button>
+            <Button type="button" onClick={props.onClick}>发送验证码</Button>
             </>
           case 'select': 
           return <select 

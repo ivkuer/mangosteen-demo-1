@@ -6,6 +6,7 @@ import { Form, FormItem } from "../shared/Form";
 import { Button } from "../shared/Button";
 import { reactive } from "vue";
 import { validate } from "../shared/validate";
+import axios from 'axios'
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -23,6 +24,8 @@ export const SignInPage = defineComponent({
     });
 
     const onSubmit = (e: Event) => {
+      console.log('s');
+      
       e.preventDefault();
       Object.assign(errors, {
         email: [],
@@ -43,8 +46,9 @@ export const SignInPage = defineComponent({
       );
     };
 
-    const onClickSendValidationCode = () => {
-      console.log(1);
+    const onClickSendValidationCode = async () => {
+     const response = await axios.post('/api/v1/validation_codes', { email: formDate.email })
+      console.log(response);
       
     }
     return () => (
