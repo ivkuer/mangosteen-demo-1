@@ -1,7 +1,7 @@
 import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from './Icon';
 import s from './Overlay.module.scss'
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 export const Overlay = defineComponent({
   props: {
     onClose: {
@@ -12,12 +12,16 @@ export const Overlay = defineComponent({
     const close = () => {
       props.onClose?.()
     }
+    const router = useRouter()
+    const link = () => {
+      router.push('/sign_in')
+    }
     return () => (<>
       <div class={s.mask} onClick={close}></div>
       <div class={s.overlay}>
         <section>
           <h2>未登录用户</h2>
-          <p>点击这里登录</p>
+          <p onClick={link}>点击这里登录</p>
         </section>
         <nav>
           <ul>
