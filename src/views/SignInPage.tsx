@@ -8,7 +8,7 @@ import { reactive } from "vue";
 import { hasError, validate } from "../shared/validate";
 import { http } from "../shared/Http";
 import { useBool } from "../hooks/useBool";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -17,6 +17,7 @@ export const SignInPage = defineComponent({
   },
   setup: (props, context) => {
     const router = useRouter()
+    const route = useRoute()
     const formDate = reactive({
       email: "",
       code: "",
@@ -47,7 +48,8 @@ export const SignInPage = defineComponent({
       if (!hasError(errors)) {
         const response = await http.post<{jwt: string}>('/session', formDate)
         localStorage.setItem('jwt', response.data.jwt)
-        router.push('/')
+        const returnTo = route.query.return_to?.toString()
+        router.push(returnTo || '/')
       }
     };
 
