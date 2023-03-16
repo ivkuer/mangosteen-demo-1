@@ -6,9 +6,9 @@ import { Form, FormItem } from "../shared/Form";
 import { Button } from "../shared/Button";
 import { reactive } from "vue";
 import { hasError, validate } from "../shared/validate";
-import axios from 'axios'
 import { http } from "../shared/Http";
 import { useBool } from "../hooks/useBool";
+import { useRouter } from "vue-router";
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -16,6 +16,7 @@ export const SignInPage = defineComponent({
     },
   },
   setup: (props, context) => {
+    const router = useRouter()
     const formDate = reactive({
       email: "",
       code: "",
@@ -44,7 +45,9 @@ export const SignInPage = defineComponent({
         ])
       );
       if (!hasError(errors)) {
-        const response = await http.post('/session', formDate)
+        const response = await http.post<{jwt: string}>('/session', formDate)
+        localStorage.setItem('jwt', response.data.jwt)
+        router.push('/')
       }
     };
 

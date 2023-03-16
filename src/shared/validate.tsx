@@ -43,6 +43,7 @@ export function hasError(errors: Record<string, string[]>) {
   for (const key in errors) {
     if (errors[key].length > 0) {
       result = true
+      break
     }
   }
   return result
