@@ -5,7 +5,7 @@ import { Icon } from "../shared/Icon";
 import { Form, FormItem } from "../shared/Form";
 import { Button } from "../shared/Button";
 import { reactive } from "vue";
-import { validate } from "../shared/validate";
+import { hasError, validate } from "../shared/validate";
 import axios from 'axios'
 import { http } from "../shared/Http";
 import { useBool } from "../hooks/useBool";
@@ -24,7 +24,7 @@ export const SignInPage = defineComponent({
       email: [],
       code: [],
     });
-    const onSubmit = (e: Event) => {      
+    const onSubmit = async (e: Event) => {      
       e.preventDefault();
       Object.assign(errors, {
         email: [],
@@ -43,6 +43,9 @@ export const SignInPage = defineComponent({
           { key: "code", type: "required", message: "必填" },
         ])
       );
+      if (!hasError(errors)) {
+        const response = await http.post('/session', formDate)
+      }
     };
 
     const onValidationCode = ref<any>()
@@ -73,7 +76,9 @@ export const SignInPage = defineComponent({
                 <Icon name="mangosteen" class={s.icon}/>
                 <p class={s.appName}>山竹记账</p>
               </div>
-              
+              <div>
+                {JSON.stringify(formDate)}
+              </div>
               <Form onSubmit={onSubmit}>
                 <FormItem
                   label="邮箱地址"
@@ -94,7 +99,7 @@ export const SignInPage = defineComponent({
                   error={errors.code?.[0]}
                 />
                 <FormItem style={{ paddingTop: '96px' }}>
-                  <Button>登录</Button>
+                  <Button type="submit">登录</Button>
                 </FormItem>
               </Form>
             </div>
