@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
 export class Http {
   instance: AxiosInstance
@@ -25,3 +25,16 @@ export class Http {
 }
 
 export const http = new Http('api/v1')
+
+http.instance.interceptors.response.use(response => {
+  console.log('res');
+  return response
+}, (err) => {
+  if(err.response) {
+    const axiosError = err as AxiosError
+    if (axiosError.response?.status === 429) {
+      alert('频繁请求')
+    }
+  }
+  throw err
+})

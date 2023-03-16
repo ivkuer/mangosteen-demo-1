@@ -47,9 +47,15 @@ export const SignInPage = defineComponent({
       );
     };
     const onValidationCode = ref<any>()
+    const onError = (error: any) => {
+      if (error.response.status === 422) {
+        Object.assign(errors, error.response.data.errors)
+      }
+      throw error
+    }
     const onClickSendValidationCode = async () => {
-     const response = await http.post('/api/v1/validation_codes', { email: formDate.email })
-     .catch(() => {})
+     const response = await http.post('/validation_codes', { email: formDate.email })
+     .catch(onError)
       onValidationCode.value.startCount()
       
     }
@@ -80,7 +86,7 @@ export const SignInPage = defineComponent({
                   v-model={formDate.code}
                   placeholder="六位数"
                   onClick={onClickSendValidationCode}
-                  countFrom={3}
+                  countFrom={1}
                   ref={onValidationCode}
                   error={errors.code?.[0]}
                 />
