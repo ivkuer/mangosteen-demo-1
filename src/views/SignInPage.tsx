@@ -7,6 +7,7 @@ import { Button } from "../shared/Button";
 import { reactive } from "vue";
 import { validate } from "../shared/validate";
 import axios from 'axios'
+import { http } from "../shared/Http";
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -47,7 +48,7 @@ export const SignInPage = defineComponent({
     };
     const onValidationCode = ref<any>()
     const onClickSendValidationCode = async () => {
-     const response = await axios.post('/api/v1/validation_codes', { email: formDate.email })
+     const response = await http.post('/api/v1/validation_codes', { email: formDate.email })
      .catch(() => {})
       onValidationCode.value.startCount()
       
