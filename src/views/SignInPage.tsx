@@ -8,6 +8,7 @@ import { reactive } from "vue";
 import { validate } from "../shared/validate";
 import axios from 'axios'
 import { http } from "../shared/Http";
+import { useBool } from "../hooks/useBool";
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -23,10 +24,7 @@ export const SignInPage = defineComponent({
       email: [],
       code: [],
     });
-
-    const onSubmit = (e: Event) => {
-      console.log('s');
-      
+    const onSubmit = (e: Event) => {      
       e.preventDefault();
       Object.assign(errors, {
         email: [],
@@ -46,7 +44,9 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+
     const onValidationCode = ref<any>()
+    const {ref: refDisabled, toggle, on, off} = useBool(false)
     const onError = (error: any) => {
       if (error.response.status === 422) {
         Object.assign(errors, error.response.data.errors)
@@ -54,10 +54,12 @@ export const SignInPage = defineComponent({
       throw error
     }
     const onClickSendValidationCode = async () => {
+      on()
      const response = await http.post('/validation_codes', { email: formDate.email })
      .catch(onError)
+     .finally(off)
+
       onValidationCode.value.startCount()
-      
     }
    
     return () => (
@@ -86,7 +88,8 @@ export const SignInPage = defineComponent({
                   v-model={formDate.code}
                   placeholder="六位数"
                   onClick={onClickSendValidationCode}
-                  countFrom={1}
+                  countFrom={60}
+                  disabled={refDisabled.value}
                   ref={onValidationCode}
                   error={errors.code?.[0]}
                 />
@@ -101,3 +104,4 @@ export const SignInPage = defineComponent({
     );
   },
 });
+
