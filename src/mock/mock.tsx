@@ -23,7 +23,7 @@ export const mockTagIndex: Mock = (config) => {
       kind: kind,
       ...attrs
     }))
-  const createPage = (page: number) => {
+  const createPage = (page: number = 1) => {
     return  {
       page,
       per_page: 25,
@@ -31,16 +31,16 @@ export const mockTagIndex: Mock = (config) => {
     }
   }
 
-  const createBody = (n = 1, attrs?:any) => {
+  const createBody = (n = 1, attrs?:any ) => {
     return {
       resources: createTag(n), 
       pager: createPage(page)
     }
   }
 
-  if (kind === 'expenses' && (page === 1 || !page)) {
+  if ((kind === 'expenses' || 'income') && (page === 1 || !page)) {
     return [200, createBody(25) as Resources<Tag>]
-  } else if (kind === 'expenses' && page === 2) {
+  } else if ((kind === 'expenses' || 'income') && page === 2) {
     return [200, createBody(1) as Resources<Tag>]
   } else {
     return [200, { resources: createTag(20) }]
