@@ -9,6 +9,10 @@ import { http } from "../../shared/Http";
 import { Button } from "../../shared/Button";
 import { useTags } from "../../shared/useTags";
 import { Tags } from "./Tags";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import { Dialog } from "vant";
+import { AxiosError } from "axios";
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -16,11 +20,28 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
-    const refKind = ref("支出");
-    const refTagId = ref<number>()
-    const refHappenAt = ref<string>(new Date().toISOString())
-    const refAmount = ref<number>()
+    const formDate = reactive({
+      kind: '支出',
+      tags_id: [],
+      amount: 0,
+      happen_at: new Date().toISOString()
 
+    })
+  const router = useRouter()
+  const onError = (error: AxiosError<ResourceError>) => {
+    if (error.response?.status === 422) {
+      Dialog.alert({
+        title: '错误',
+        message: Object.values( error.response.data.errors).join('\n'),
+      })
+    }
+    throw error
+  }
+    const onSubmit = async () => {
+     await http.post<Resources<Item>>('/items', formDate, {params: {_mock: 'itemCreate'}})
+      .catch(onError)
+     router.push('/items')
+    }
       
     return () => (
       <MainLayout>
@@ -30,20 +51,23 @@ export const ItemCreate = defineComponent({
           default: () => (
             <>
               <div class={s.wrapper}>
-                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                <Tabs v-model:selected={formDate.kind} class={s.tabs}>
                   <Tab name="支出">
-                   <Tags kind="expenses" v-model:selected={refTagId.value}/>
+                   <Tags kind="expenses" v-model:selected={formDate.tags_id[0]}/>
                   </Tab>
                   <Tab name="收入" >
-                   <Tags kind= 'income' name="收入" v-model:selected={refTagId.value}/>
+                   <Tags kind='income' v-model:selected={formDate.tags_id[0]}/>
                   </Tab>
+                 
                 </Tabs>
-                <div>{refHappenAt.value}</div>
-                <div>{refAmount.value}</div>
+                <div>
+                    {JSON.stringify(formDate)}
+                  </div>
                 <div class={s.inputPad_wrapper}>
                   <InputPad 
-                  v-model:happenAt={refHappenAt.value}
-                  v-model:amount={refAmount.value}
+                  v-model:happenAt={formDate.happen_at}
+                  v-model:amount={formDate.amount}
+                  onSubmit={onSubmit}
                   />
                 </div>
               </div>
