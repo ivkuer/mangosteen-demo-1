@@ -17,7 +17,7 @@ export const mockTagIndex: Mock = (config) => {
   }
   const createTag = (n = 1, attrs?: any) => 
     Array.from({length: n}).map(() => ({
-      id: createId,
+      id: createId(),
       name: faker.lorem.word(),
       sign: faker.internet.emoji(),
       kind: kind,
