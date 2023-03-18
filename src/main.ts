@@ -15,15 +15,15 @@ const router = createRouter({
 })
 
 feachMe()
-router.beforeEach(async (to, from) => {
-    if (to.path === '/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path === '/start') {
+router.beforeEach((to, from) => {
+    if (['/', '/start'].includes(to.path) || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in')) {
         return true
     } else {
-        const path = await mePromise.then(
+        return mePromise.then(
             ()=> true,
             () => '/sign_in?return_to=' + to.path
         )
-        return path
+        
     }
 })
 

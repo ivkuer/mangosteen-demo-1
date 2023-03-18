@@ -4,6 +4,8 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
+import { onMounted } from "vue";
+import { http } from "../../shared/Http";
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -12,12 +14,16 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref("支出");
-    const refExpensesTags = ref([
-      { id: 1, name: "餐费", sign: "￥", category: "expenses" },
-    ]);
-    const refIncomeTags = ref([
-      { id: 1, name: "工资", sign: "￥", category: "incoome" },
-    ]);
+    onMounted(async () => {
+      const response = await http.get<{resources: Tag[]}>('/tags', {kind: 'expenses', _mock: 'tagIndex'})
+      refExpensesTags.value = response.data.resources      
+    })
+    onMounted(async () => {
+      const response = await http.get<{resources: Tag[]}>('/tags', {kind: 'income', _mock: 'tagIndex'})
+      refIncomeTags.value = response.data.resources      
+    })
+    const refExpensesTags = ref<Tag[]>([]);
+    const refIncomeTags = ref<Tag[]>([]);
     return () => (
       <MainLayout>
         {{
