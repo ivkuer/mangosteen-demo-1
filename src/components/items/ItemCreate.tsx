@@ -6,6 +6,7 @@ import { Tabs, Tab } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
 import { onMounted } from "vue";
 import { http } from "../../shared/Http";
+import { Button } from "../../shared/Button";
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -14,9 +15,13 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref("支出");
+    const refpage = ref(0)
+    const hasMore = ref(false)
     onMounted(async () => {
-      const response = await http.get<{resources: Tag[]}>('/tags', {kind: 'expenses', _mock: 'tagIndex'})
-      refExpensesTags.value = response.data.resources      
+      const response = await http.get<Resources<Tag>>('/tags', {kind: 'expenses', _mock: 'tagIndex'})
+      const {resources, pager} = response.data
+      refExpensesTags.value = resources 
+      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
     })
     onMounted(async () => {
       const response = await http.get<{resources: Tag[]}>('/tags', {kind: 'income', _mock: 'tagIndex'})
@@ -33,19 +38,24 @@ export const ItemCreate = defineComponent({
             <>
               <div class={s.wrapper}>
                 <Tabs v-model:selected={refKind.value} class={s.tabs}>
-                  <Tab name="支出" class={s.tags_wrapper}>
-                    <div class={s.tag}>
-                      <div class={s.sign}>
-                        <Icon name="add" class={s.createTag} />
+                  <Tab name="支出">
+                    <div class={s.tags_wrapper}>
+                      <div class={s.tag}>
+                        <div class={s.sign}>
+                          <Icon name="add" class={s.createTag} />
+                        </div>
+                        <div class={s.name}>新增</div>
                       </div>
-                      <div class={s.name}>新增</div>
+                      {refExpensesTags.value.map((tag) => (
+                        <div class={[s.tag, s.selected]}>
+                          <div class={s.sign}>{tag.sign}</div>
+                          <div class={s.name}>{tag.name}</div>
+                        </div>
+                      ))}
                     </div>
-                    {refExpensesTags.value.map((tag) => (
-                      <div class={[s.tag, s.selected]}>
-                        <div class={s.sign}>{tag.sign}</div>
-                        <div class={s.name}>{tag.name}</div>
-                      </div>
-                    ))}
+                    <div class={s.more}>
+                      <Button>加载更多</Button>
+                    </div>
                   </Tab>
                   <Tab name="收入" class={s.tags_wrapper}>
                     <div class={s.tag}>
