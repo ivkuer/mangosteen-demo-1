@@ -8,7 +8,9 @@ export let  mePromise: Promise<AxiosResponse<{
 }>>
 
 export const refreshMe = () => {
-   mePromise = http.get<{resource: {id: number}}>('/me')
+   mePromise = http.get<{resource: {id: number}}>('/me', {_mock: 'me'})
+   console.log(mePromise);
+   
    return mePromise
 }
 
