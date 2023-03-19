@@ -22,7 +22,6 @@ export class Time {
   }
   format(pattern = 'YYYY-MM-DD') {
     // 目前支持的格式有 YYYY MM DD HH mm ss SSS
-    const fake = new Date('2023-03-18T08:58:10.555Z')
     
       
     const year = this.date.getFullYear()
