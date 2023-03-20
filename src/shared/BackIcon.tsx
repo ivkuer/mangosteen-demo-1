@@ -15,6 +15,6 @@ export const BackIcon = defineComponent({
         router.back()
       }
     }
-    return () => (<Icon name="left" class={s.icon} onClick={onclick} />)
+    return () => (<Icon name="left" class={s.icon} onClick={onClick} />)
   }
 })
