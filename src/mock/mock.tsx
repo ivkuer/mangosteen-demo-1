@@ -5,7 +5,7 @@ type Mock = (config: AxiosRequestConfig) => [number, any]
 faker.setLocale('zh_CN');
 
 export const mockMe: Mock = (config) => {
-  return [200, { resources: {id: 1} }]
+  return [200, { resource: {id: 1, email: '11010@qq.com'} }]
 }
 export const mockSession:Mock = (config) => {
   return [200, { jwt: faker.random.word() }]

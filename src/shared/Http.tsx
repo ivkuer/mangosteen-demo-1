@@ -89,6 +89,8 @@ http.instance.interceptors.response.use((response) => {
 })
 
 http.instance.interceptors.response.use(response => {
+  console.log(response);
+  
   return response
 }, (err) => {
   if(err.response) {
