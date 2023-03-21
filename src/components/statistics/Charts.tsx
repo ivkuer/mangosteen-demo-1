@@ -10,6 +10,7 @@ import { PieChart } from './PieChart';
 import { http } from '../../shared/Http';
 import { computed } from 'vue';
 import { Time } from '../../shared/time';
+import { watch } from 'vue';
 
 type Data1Item = {happen_at: string, amount: number}
 type Data1 = Data1Item[]
@@ -44,7 +45,7 @@ export const Charts = defineComponent({
         return [new Date(time).toISOString(), amount]
       })   
     })
-    onMounted(async () => {
+    const fetchData1 = async () => {
       const response = await http.get<{groups: Data1, summary: number}>('/items/summary', {
         happen_after: props.startDate,
         happen_before: props.endDate,
@@ -53,7 +54,9 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })      
       data1.value = response.data.groups
-    })
+    }
+    onMounted(fetchData1)
+    watch(() => kind.value, fetchData1)
 
     // data2
     const data2 = ref<Data2>([])
@@ -63,7 +66,8 @@ export const Charts = defineComponent({
         value: item.amount
       }))
     )
-    onMounted(async () => {
+
+    const fetchData2 = async () => {
       const response = await http.get<{groups: Data2, summary: number}>('/items/summary', {
         happen_after: props.startDate,
         happen_before: props.endDate,
@@ -72,9 +76,9 @@ export const Charts = defineComponent({
         _mock: 'itemSummary'
       })
       data2.value = response.data.groups
-    console.log(data2.value);
-
-    })
+    }
+    onMounted(fetchData2)
+    watch(() => kind.value, fetchData2)
 
     const betterData3 = computed<{tag:Tag, amount:number, percent: number}[]>(()=>{
       const total = data2.value.reduce((sum, item) => sum + item.amount, 0)

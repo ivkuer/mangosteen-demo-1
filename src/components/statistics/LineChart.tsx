@@ -16,7 +16,7 @@ const echartsOption = {
   grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],
   xAxis: {
     type: 'time',
-    boundaryGap: ['3%', '0%'],
+    boundaryGap: ['1%', '1%'],
     axisLabel: {
       formatter: (value: string) => new Time(new Date(value)).format('MM-DD'),
     },
