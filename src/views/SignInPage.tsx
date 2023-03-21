@@ -48,8 +48,8 @@ export const SignInPage = defineComponent({
         ])
       );
       if (!hasError(errors)) {
-        // {params: {_mock: 'session'}}
-        const response = await http.post<{jwt: string}>('/session', formDate)
+        // { {_mock: 'session'}
+        const response = await http.post<{jwt: string}>('/session', formDate, {_autoLoading: true})
         localStorage.setItem('jwt', response.data.jwt)
         const returnTo = route.query.return_to?.toString()
         refreshMe()
@@ -67,7 +67,9 @@ export const SignInPage = defineComponent({
     }
     const onClickSendValidationCode = async () => {
       on()
-     const response = await http.post('/validation_codes', { email: formDate.email })
+     const response = await http.post('/validation_codes', { email: formDate.email }, {
+      _autoLoading: true
+     })
      .catch(onError)
      .finally(off)
 

@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { mockItemCreate, mockItemIndex, mockItemIndexBalance, mockItemSummary, mockMe, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
+import { Toast } from "vant";
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
@@ -34,7 +35,7 @@ const mock = (response: AxiosResponse) => {
   if (location.hostname !== 'localhost' 
   && location.hostname !== '127.0.0.1'
   && location.hostname !== '192.168.3.57') {return false}
-  switch (response.config?.params?._mock) {
+  switch (response.config?._mock) {
     case 'session':
       [response.status, response.data] = mockSession(response.config)
       return true
@@ -72,8 +73,30 @@ http.instance.interceptors.request.use(config => {
   if (token) {
     config.headers!.Authorization = `Bearer ${token}`
   }
+  if (config._autoLoading === true) {
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0
+    })
+  }
   return config
 })
+
+http.instance.interceptors.response.use(
+  (response) => {
+    if (response.config._autoLoading === true) {
+      Toast.clear();
+    }
+    return response
+  },
+  (error: AxiosError) => {
+    if (error.response?.config._autoLoading === true) {
+      Toast.clear();
+    }
+    throw error
+  }
+)
 
 http.instance.interceptors.response.use((response) => {
   mock(response)
