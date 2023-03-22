@@ -21,7 +21,7 @@ export const TagEdit = defineComponent({
         message: "确认删除标签吗？",
       });
       await http.delete(`/tags/${numberId}`, {
-        withItems: options?.withItems ? "true" : "false",
+        with_items: options?.withItems ? "true" : "false",
       }, {_autoLoading: true});
       router.back();
     };

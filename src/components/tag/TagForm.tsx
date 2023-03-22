@@ -40,7 +40,7 @@ export const TagForm = defineComponent({
         sign: "",
       });
       Object.assign(errors, validate(formData, rules));
-      if(!hasError(errors)) {
+      if(!hasError(errors as { [x: string]: string[]})) {
         const promise = await formData.id ? 
         http.patch(`/tags/${formData.id}`, formData, {_autoLoading: true}) :
         http.post('/tags',formData,{_mock: 'tagCreate', _autoLoading: true})

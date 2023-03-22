@@ -4,7 +4,7 @@ import { FloatButton } from '../../shared/FloatButton';
 import { http } from '../../shared/Http';
 import { onMounted } from 'vue';
 import { Button } from '../../shared/Button';
-import { Money } from '../../shared/Money';
+import { getMoney, Money } from '../../shared/Money';
 import { Datetime } from '../../shared/Datetime';
 import { reactive } from 'vue';
 import { Center } from '../../shared/Center';
@@ -81,26 +81,26 @@ export const ItemSummary = defineComponent({
             <ul class={s.total}>
               <li>
                 <span>收入</span>
-                <span>{itemBalance.income}</span>
+                <span>{getMoney(itemBalance.income) }</span>
               </li>
               <li>
                 <span>支出</span>
-                <span>{itemBalance.expenses}</span>
+                <span>{getMoney(itemBalance.expenses)}</span>
               </li>
               <li>
                 <span>净收入</span>
-                <span>{itemBalance.balance}</span>
+                <span>{getMoney(itemBalance.balance)}</span>
               </li>
             </ul>
             <ol class={s.list}>
               {items.value.map((item) => (
                 <li>
                   <div class={s.sign}>
-                    <span>{item.tags![0].sign}</span>
+                    <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
                   </div>
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
-                      <span class={s.tag}>{item.tags![0].name}</span>
+                      <span class={s.tag}>{ item.tags && item.tags.length > 0 ? item.tags[0].name : '未分类'}</span>
                       <span class={s.amount}>
                         ￥<Money amount={item.amount}/>
                       </span>
