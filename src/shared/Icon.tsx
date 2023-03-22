@@ -8,6 +8,9 @@ export const Icon = defineComponent({
         name: {
             type: String as PropType<IconName>,
             required: true
+        },
+        onClick: {
+            type: Function as PropType<() => void>
         }
     },
     setup: (props, context) => {
