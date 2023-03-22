@@ -14,13 +14,15 @@ export const TagForm = defineComponent({
   setup: (props, context) => {
     const route = useRoute()
     const router = useRouter()
+    console.log(route.query.kind?.toString());
+    
     const formData = reactive<Partial<Tag>>({
       id: undefined,
       name: "",
       sign: "",
-      kind: route.query.kind?.toString(),
+      kind: route.query.kind!.toString() as ('expenses' | 'income'),
     });
-    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
+    const errors = reactive<FormErrors<typeof formData>>({});
     const onSubmit = async (e: Event) => {
       e.preventDefault();
       const rules: Rules<typeof formData> = [
