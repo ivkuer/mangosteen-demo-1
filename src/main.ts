@@ -16,7 +16,7 @@ const router = createRouter({
 
 feachMe()
 router.beforeEach((to, from) => {
-    if (['/', '/start'].includes(to.path) || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in')) {
+    if (['/', '/items'].includes(to.path) || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in')) {
         return true
     } else {
         return mePromise.then(
