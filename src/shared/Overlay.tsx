@@ -85,6 +85,8 @@ export const OverlayIcon = defineComponent({
     const overlayVisile = ref(false)
     const onClickMenu = () => {
       overlayVisile.value = !overlayVisile.value
+      console.log(overlayVisile.value);
+      
     }
     return () => (
       <>

@@ -1,6 +1,6 @@
 .mask {
   position: fixed;
-  z-index: var(--z-index-overlay);
+  z-index: 100;
   background: var(--overlay-mask-bg);
   top: var(--top-safe-area-height);
   left: 0;
@@ -21,6 +21,7 @@
   width: 16em;
   height: calc(100% - var(--top-safe-area-height));
   color: var(--text);
+  z-index: 100;
 }
 .currentUser {
   padding: 32px 16px;
