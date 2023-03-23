@@ -46,10 +46,10 @@ export class Time {
     return new Time(new Date(this.date.getFullYear(), 0, 1, 0, 0, 0));
   }
   lastDayOfMonth() {
-    return new Time(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0));
+    return new Time(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 1, 0, 0, 0));
   }
   lastDayOfYear() {
-    return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0));
+    return new Time(new Date(this.date.getFullYear() + 1, 0, 1, 0, 0, 0));
   }
   getRaw() {
     return this.date
