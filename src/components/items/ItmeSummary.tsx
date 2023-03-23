@@ -10,6 +10,9 @@ import { reactive } from 'vue';
 import { Center } from '../../shared/Center';
 import { Icon } from '../../shared/Icon';
 import { RouterLink } from 'vue-router';
+import { useAfterMe } from '../../hooks/useAfterMe';
+import { useItemStore } from '../../stores/useItemStore';
+import { storeToRefs } from 'pinia';
 export const ItemSummary = defineComponent({
   props: {
     startDate: {
@@ -22,32 +25,17 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
-    const items = ref<Item[]>([])
-    const hasMore = ref(false)
-    const page = ref(0)
-    const fetchItems = async () => {
-      if (!props.startDate || !props.endDate) return
-      const response = await http.get<Resources<Item>>('/items', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-      }, {
-        _mock: 'itemIndex',
-        _autoLoading: true
-
-      })
-      const { resources, pager } = response.data
-      items.value.push(...resources)
-      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
-      page.value += 1
-      } 
-    onMounted(fetchItems)
+    if (!props.startDate || !props.endDate) {
+      return () => <div>请选择时间范围</div>
+    }
+    const itemStore = useItemStore(['items', props.startDate, props.endDate])
+    const { fetchItems, fetchNextPage } = itemStore
+    const {items, hasMore} = storeToRefs(itemStore)
+    useAfterMe(() => fetchItems(props.startDate, props.endDate))
 
     watch([() => props.startDate, () => props.endDate] , () => {
-      items.value = []
-     hasMore.value = false
-     page.value = 0
-     fetchItems()
+      itemStore.$reset()
+      fetchItems()
     })
 
     const itemBalance = reactive({
@@ -57,15 +45,13 @@ export const ItemSummary = defineComponent({
       if (!props.startDate || !props.endDate) return
       const response = await http.get('/items/balance', {
         happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-        
+        happen_before: props.endDate,        
       }, {
         _mock: 'itemIndexBalance'
       })
       Object.assign(itemBalance, response.data)
     }
-    onMounted(fetchItemBalance)
+    useAfterMe(fetchItemBalance)
     watch([() => props.startDate, () => props.endDate] , () => {
       Object.assign(itemBalance, {
         expenses: 0, income: 0, balance: 0
@@ -112,7 +98,7 @@ export const ItemSummary = defineComponent({
             </ol>
             <div class={s.more}>
               {hasMore.value ?
-                <Button onClick={fetchItems}>加载更多</Button> :
+                <Button onClick={() => fetchNextPage(props.startDate, props.endDate)}>加载更多</Button> :
                 <span>没有更多</span>
               }
               </div>

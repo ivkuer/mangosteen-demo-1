@@ -9,8 +9,8 @@ import { hasError, validate } from "../shared/validate";
 import { http } from "../shared/Http";
 import { useBool } from "../hooks/useBool";
 import { useRoute, useRouter } from "vue-router";
-import { refreshMe } from "../shared/me";
 import { BackIcon } from "../shared/BackIcon";
+import { useMeStore } from "../stores/useMeStore";
 export const SignInPage = defineComponent({
   props: {
     name: {
@@ -18,6 +18,8 @@ export const SignInPage = defineComponent({
     },
   },
   setup: (props, context) => {
+    const meStore = useMeStore()
+    const {refreshMe} = meStore
     const router = useRouter()
     const route = useRoute()
     const formDate = reactive({

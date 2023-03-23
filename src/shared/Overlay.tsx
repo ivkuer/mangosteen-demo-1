@@ -2,9 +2,10 @@ import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from './Icon';
 import s from './Overlay.module.scss'
 import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { mePromise } from './me';
 import { onMounted } from 'vue';
 import { Dialog } from 'vant';
+import { useMeStore } from '../stores/useMeStore';
+import { storeToRefs } from 'pinia';
 export const Overlay = defineComponent({
   props: {
     onClose: {
@@ -12,13 +13,15 @@ export const Overlay = defineComponent({
     }
   },
   setup: (props, context) => {
+    const meStore = useMeStore()
+    const {mePromise} = storeToRefs(meStore)
     const close = () => {
       props.onClose?.()
     }
     const route = useRoute()
     const me = ref<User>()
     onMounted(async () => {
-       const response = await mePromise
+       const response = await mePromise?.value
        me.value = response?.data.resource
     }) 
     const onSignOut = () => {
