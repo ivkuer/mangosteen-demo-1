@@ -56,7 +56,7 @@ export const Overlay = defineComponent({
           <li>
               <RouterLink to="/items" class={s.action}>
                 <Icon name="pig" class={s.icon} />
-                <span>统计图表</span>
+                <span>开始记账</span>
               </RouterLink>
             </li>
             <li>

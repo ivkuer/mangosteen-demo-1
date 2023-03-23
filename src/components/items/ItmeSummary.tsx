@@ -25,9 +25,7 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
-    if (!props.startDate || !props.endDate) {
-      return () => <div>请选择时间范围</div>
-    }
+    
     const itemStore = useItemStore(['items', props.startDate, props.endDate])
     const { fetchItems, fetchNextPage } = itemStore
     const {items, hasMore} = storeToRefs(itemStore)
@@ -35,7 +33,7 @@ export const ItemSummary = defineComponent({
 
     watch([() => props.startDate, () => props.endDate] , () => {
       itemStore.$reset()
-      fetchItems()
+      fetchItems(props.startDate, props.endDate)
     })
 
     const itemBalance = reactive({
@@ -60,7 +58,9 @@ export const ItemSummary = defineComponent({
     })
     
     return () => ( 
-    <div class={s.wrapper}>
+      !props.startDate || !props.endDate 
+      ? <div>请选择时间范围</div>
+      : <div class={s.wrapper}>
       {
         (items.value && items.value.length > 0) ? 
           <>
@@ -105,8 +105,9 @@ export const ItemSummary = defineComponent({
           </>
          : (
           <>
-           <Center class={s.pig_wrapper}>
+           <Center class={s.pig_wrapper} direction="|">
                             <Icon name="pig" class={s.pig} />
+                            <p>目前没有数据</p>
                         </Center>
                         <div class={s.button_wrapper}>
                             <RouterLink to='/items/create'>
