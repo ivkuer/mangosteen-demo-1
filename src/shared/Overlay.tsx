@@ -19,17 +19,26 @@ export const Overlay = defineComponent({
       props.onClose?.()
     }
     const route = useRoute()
+    const router = useRouter()
     const me = ref<User>()
     onMounted(async () => {
        const response = await mePromise?.value
        me.value = response?.data.resource
     }) 
-    const onSignOut = () => {
-      Dialog.confirm({
+    const onSignOut = async () => {
+      await Dialog.confirm({
         title: '退出',
         message: '你确定要退出登录吗？'
       })
       localStorage.removeItem('jwt')
+      if (route.path === '/items') {
+        window.location.reload()
+      } else {
+        router.push('/items')
+      }
+
+      console.log(route.path);
+      
     }
     
     return () => (<>
