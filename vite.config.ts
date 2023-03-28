@@ -6,8 +6,10 @@ import styleImport, { VantResolve } from "vite-plugin-style-import";
 import { svgstore } from "./src/vite_plugins/svgstore";
 
 // https://vitejs.dev/config/
+// 下面是true
 export default defineConfig(({command}) => {
   return {
+    base: '/mangosteen-demo-1/dist',
     define: command === 'build' ? {
       DEBUG: false
     } : {
