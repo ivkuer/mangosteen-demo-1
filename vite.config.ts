@@ -6,6 +6,7 @@ import styleImport, { VantResolve } from "vite-plugin-style-import";
 import { svgstore } from "./src/vite_plugins/svgstore";
 
 // https://vitejs.dev/config/
+// 下面是true
 export default defineConfig(({command}) => {
   return {
     define: command === 'build' ? {

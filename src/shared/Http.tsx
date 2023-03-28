@@ -129,6 +129,7 @@ if (DEBUG) {
   );
 }
 
+// DEBUG
 export const http = new Http(
   DEBUG ? "api/v1" : "https://mangosteen2.hunger-valley.com/"
 );
