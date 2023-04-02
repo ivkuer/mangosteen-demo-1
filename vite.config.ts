@@ -9,6 +9,7 @@ import { svgstore } from "./src/vite_plugins/svgstore";
 // 下面是true
 export default defineConfig(({command}) => {
   return {
+    
     base: '/mangosteen-demo-1/dist',
     define: command === 'build' ? {
       DEBUG: false
