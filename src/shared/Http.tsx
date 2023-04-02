@@ -131,7 +131,7 @@ if (DEBUG) {
 
 // DEBUG
 export const http = new Http(
-  DEBUG ? "api/v1" : "https://mangosteen2.hunger-valley.com/api/v1"
+  false ? "api/v1" : "https://mangosteen2.hunger-valley.com/api/v1"
 );
 
 http.instance.interceptors.request.use((config) => {

@@ -13,7 +13,7 @@ export default defineConfig(({command}) => {
     define: command === 'build' ? {
       DEBUG: false
     } : {
-      DEBUG: true
+      DEBUG: false
     },
     build: {
       rollupOptions: {
