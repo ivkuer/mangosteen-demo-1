@@ -50,7 +50,6 @@ export const SignInPage = defineComponent({
         ])
       );
       if (!hasError(errors)) {
-        // { {_mock: 'session'}
         const response = await http.post<{jwt: string}>('/session', formDate, {_autoLoading: true})
         localStorage.setItem('jwt', response.data.jwt)
         const returnTo = route.query.return_to?.toString()
@@ -87,10 +86,7 @@ export const SignInPage = defineComponent({
             <div>
               <div class={s.logo}>
                 <Icon name="mangosteen" class={s.icon}/>
-                <p class={s.appName}>山竹记账</p>
-              </div>
-              <div>
-                {JSON.stringify(formDate)}
+                <p class={s.appName}>点滴记账</p>
               </div>
               <Form onSubmit={onSubmit}>
                 <FormItem

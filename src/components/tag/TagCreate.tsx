@@ -2,6 +2,7 @@ import { defineComponent } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { TagForm } from "./TagForm";
 import { BackIcon } from "../../shared/BackIcon";
+import { def } from "@vue/shared";
 export const TagCreate = defineComponent({
   setup: (props, context) => {
     return () => (
@@ -15,3 +16,5 @@ export const TagCreate = defineComponent({
     );
   },
 });
+
+export default TagCreate

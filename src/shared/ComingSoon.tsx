@@ -14,7 +14,7 @@ export const ComingSoon = defineComponent({
      
       <div>
         <Center class={s.pig_wrapper}>
-          <Icon name="pig" class={s.pig} />
+          <Icon name="saveMoney" class={s.pig} />
         </Center>
         <p class={s.text}>敬请期待</p>
         <p>
